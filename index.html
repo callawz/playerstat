@@ -1,372 +1,152 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <base target="_self">
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>The Repores</title>
-  <link rel="icon" type="image/x-icon" href="Favicon.png">
-  <link rel="icon" href="Favicon.png">
-  <meta
-    name="description"
-    content="Official website of The Repores, from Melbourne, Australia. Discover our music, tour dates, news, store, and join the Rhad Pack!"
-  />
-
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Trebuchet+MS:wght@400;700&display=swap"
-    rel="stylesheet"
-  />
-
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            "repores-red": "#eb1d4c",
-            "repores-purple": "#680ed2",
-            "repores-black": "#111111",
-            "repores-white": "#fafafa",
-          },
-          fontFamily: {
-            trebuchet: ["Trebuchet MS", "sans-serif"],
-          },
-        },
-      },
-    };
-  </script>
-  <style>
-    body {
-      font-family: "Trebuchet MS", sans-serif;
-    }
-    .pulse-animation {
-      animation: pulse 2s infinite;
-    }
-    @keyframes pulse {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.05); }
-      100% { transform: scale(1); }
-    }
-
-    /* === RHAD SECTION (peek + jump + landing) === */
-    #cal-frame {
-      position: relative;
-      display: inline-block;
-    }
-
-    /* Rhad hidden behind CL.png, not squashed */
-    #rhad-img {
-      position: absolute;
-      left: 50%;
-      top: 20%;
-      width: 72px;
-      height: 72px;
-      object-fit: contain;
-      transform: translateX(-50%) translateY(0);
-      z-index: 10;
-      transition: all 0.6s cubic-bezier(0.45, 0, 0.55, 1);
-      pointer-events: none;
-      opacity: 0;
-    }
-
-    /* Peek */
-    #rhad-img.peek {
-      transform: translateX(-50%) translateY(-120%);
-      z-index: 20;
-      opacity: 1;
-    }
-
-    /* Jump: always visible */
-    @keyframes rhad-jump-leap {
-      0% {
-        transform: translateX(-50%) translateY(-120%) scale(1);
-        z-index: 40;
-      }
-      25% {
-        transform: translateX(-50%) translateY(-190%) scale(1.4);
-      }
-      50% {
-        transform: translateX(-50%) translateY(-260%) scale(1.8);
-      }
-      75% {
-        transform: translateX(-50%) translateY(-150%) scale(1.5);
-      }
-      100% {
-        transform: translateX(-50%) translateY(-80%) scale(1.2);
-        z-index: 50;
-      }
-    }
-
-    #rhad-img.jump {
-      animation: rhad-jump-leap 0.9s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-      z-index: 50;
-    }
-
-    /* Landing: centered above "Meet Rhad" inside its block */
-    @keyframes rhad-land {
-      0% {
-        transform: translateX(-50%) translateY(-60px) scale(1.2);
-      }
-      40% {
-        transform: translateX(-50%) translateY(10px) scale(1.25);
-      }
-      70% {
-        transform: translateX(-50%) translateY(-6px) scale(1.05);
-      }
-      100% {
-        transform: translateX(-50%) translateY(0) scale(1);
-      }
-    }
-
-    .rhad-landing {
-      position: absolute;
-      left: 50%;
-      top: 0;
-      transform: translateX(-50%) translateY(0);
-      animation: rhad-land 0.7s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-      width: 96px;
-      height: 96px;
-      object-fit: contain;
-    }
-
-    @keyframes page-shake {
-      0%, 100% { transform: translateX(0); }
-      20% { transform: translateX(-4px); }
-      40% { transform: translateX(4px); }
-      60% { transform: translateX(-2px); }
-      80% { transform: translateX(2px); }
-    }
-    .page-shake { animation: page-shake 0.5s ease-in-out; }
-  </style>
-</head>
-<body class="bg-repores-white text-repores-black font-trebuchet min-h-screen">
-  <!-- Navigation -->
-  <header class="bg-repores-black text-repores-white sticky top-0 z-50 shadow-lg">
-    <nav class="container mx-auto px-4 py-4">
-      <div class="flex flex-col md:flex-row justify-between items-center">
-        <div class="mb-4 md:mb-0">
-          <img src="LOGO.png" alt="The Repores Logo" class="h-12 pulse-animation" />
-        </div>
-        <div class="flex flex-wrap justify-center gap-4 md:gap-8">
-          <a href="/" class="text-repores-purple hover:text-repores-red transition-colors duration-300 font-bold" aria-current="page">HOME</a>
-          <a href="tour" class="text-repores-white hover:text-repores-red transition-colors duration-300 font-bold">TOUR</a>
-          <a href="news" class="text-repores-white hover:text-repores-red transition-colors duration-300 font-bold">NEWS</a>
-          <a href="music" class="text-repores-white hover:text-repores-red transition-colors duration-300 font-bold">MUSIC</a>
-          <a href="store" class="text-repores-white hover:text-repores-red transition-colors duration-300 font-bold">STORE</a>
-        </div>
-      </div>
-    </nav>
-  </header>
-
-  <!-- Rock The Night Section -->
-  <section class="relative bg-black text-repores-white overflow-hidden">
-    <img src="BANDPHOTO1.jpg" alt="The Repores band photo" class="w-full h-auto hidden md:block" />
-    <img src="BANDPHOTOMOBILE.jpg" alt="The Repores band photo mobile" class="w-full h-auto block md:hidden" />
-    <div class="hidden md:block absolute inset-x-0 top-0">
-      <div class="container mx-auto px-4 pt-20 lg:pt-24 pb-4 text-center">
-        <h2 class="font-bold mb-3 text-4xl md:text-5xl lg:text-6xl">WHO'S HERE TO DANCE?</h2>
-        <p class="mb-5 mx-auto text-base md:text-lg lg:text-2xl max-w-2xl">The Repores are serving up some of the freshest alternative rock and danceable bops in the Melbourne/Naarm scene. At their shows, people don't roll until after the floor starts rocking.</p>
-        <div class="flex flex-col sm:flex-row gap-3 justify-center">
-          <a href="music" class="border-2 border-repores-white text-repores-white rounded-full font-bold hover:bg-repores-white hover:text-repores-red transition-all duration-300 text-base lg:text-lg px-6 py-3">LISTEN NOW</a>
-          <a href="tour" class="border-2 border-repores-white text-repores-white rounded-full font-bold hover:bg-repores-white hover:text-repores-red transition-all duration-300 text-base lg:text-lg px-6 py-3">TOUR DATES</a>
-        </div>
-      </div>
-    </div>
-    <div class="block md:hidden absolute inset-x-0 top-0">
-      <div class="container mx-auto px-4 pt-6 pb-3 text-center">
-        <h2 class="font-bold mb-2 text-3xl">WHO'S HERE TO DANCE?</h2>
-        <p class="mb-3 mx-auto text-sm max-w-xl">The Repores are serving up some of the freshest alternative rock and danceable bops in the Melbourne/Naarm scene. At their shows, people don't roll until after the floor starts rocking.</p>
-      </div>
-    </div>
-    <div class="block md:hidden absolute inset-x-0 bottom-4">
-      <div class="container mx-auto px-4">
-        <div class="flex flex-col sm:flex-row gap-2 justify-center">
-          <a href="music" class="border-2 border-repores-white text-repores-white rounded-full font-bold hover:bg-repores-white hover:text-repores-red transition-all duration-300 text-sm px-4 py-2">LISTEN NOW</a>
-          <a href="tour" class="border-2 border-repores-white text-repores-white rounded-full font-bold hover:bg-repores-white hover:text-repores-red transition-all duration-300 text-sm px-4 py-2">TOUR DATES</a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Latest Release Section -->
-  <section class="py-16 bg-repores-white">
-    <div class="container mx-auto px-4">
-      <h2 class="text-4xl font-bold text-center mb-12 text-repores-red">LATEST RELEASE</h2>
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-        <div class="text-center md:text-left">
-          <h4 class="text-2xl font-bold text-repores-purple mb-4">House Pets and Empty Threats</h4>
-          <p class="text-lg mb-6">Our debut EP is out now!</p>
-          <a href="https://album.link/thereporeshpaetep" target="_blank" rel="noopener noreferrer" class="bg-repores-red text-repores-white px-6 py-2 rounded-full font-bold hover:bg-opacity-90 transition-colors duration-300 inline-block">STREAM NOW</a>
-        </div>
-        <div class="flex justify-center">
-          <img src="HPAETC.png" alt="House Pets and Empty Threats EP Cover" class="rounded-lg shadow-2xl transform hover:rotate-2 transition-transform duration-300" loading="lazy" />
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- THE BAND (with Rhad) -->
-  <section class="py-16 bg-repores-black text-repores-white flex flex-col justify-between">
-    <!-- Band heading + cards -->
-    <div class="container mx-auto px-4 text-center">
-      <h3 class="text-3xl font-bold mb-8">THE BAND</h3>
-      <div class="grid grid-cols-2 sm:grid-cols-5 gap-8 max-w-5xl mx-auto justify-center">
-        <div>
-          <img src="XL.png" alt="Xavier Lane - Lead Vocals & Guitar" class="rounded-lg shadow-lg mx-auto" />
-          <h4 class="mt-4 font-bold text-lg">Xavier Lane</h4>
-          <p class="text-sm text-repores-white opacity-80">Lead Vocals & Guitar</p>
-        </div>
-
-        <div>
-          <img src="AC.png" alt="Angus Cole - Lead Guitar & Vocals" class="rounded-lg shadow-lg mx-auto" />
-          <h4 class="mt-4 font-bold text-lg">Angus Cole</h4>
-          <p class="text-sm text-repores-white opacity-80">Lead Guitar & Vocals</p>
-        </div>
-
-        <!-- Cal + Rhad -->
-        <div id="cal-container">
-          <div class="flex flex-col items-center">
-            <div id="cal-frame" class="relative inline-block">
-              <img src="CL.png" alt="Cal Lawrence - Drums" class="rounded-lg shadow-lg mx-auto block relative z-30" />
-              <img src="RHAD.png" id="rhad-img" alt="Rhad the Dog" />
-            </div>
-            <h4 class="mt-4 font-bold text-lg">Cal Lawrence</h4>
-            <p class="text-sm text-repores-white opacity-80">Drums & Percussion</p>
-          </div>
-        </div>
-
-        <div>
-          <img src="JP.png" alt="Jimmy Prendergast - Bass" class="rounded-lg shadow-lg mx-auto" />
-          <h4 class="mt-4 font-bold text-lg">Jimmy Prendergast</h4>
-          <p class="text-sm text-repores-white opacity-80">Bass</p>
-        </div>
-
-        <div>
-          <img src="AL.png" alt="Alex Lutton - Keyboards" class="rounded-lg shadow-lg mx-auto" />
-          <h4 class="mt-4 font-bold text-lg">Alex Lutton</h4>
-          <p class="text-sm text-repores-white opacity-80">Keyboards & Percussion</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- Rhad info lower in the same black section -->
-    <div class="container mx-auto px-4 text-center mt-8">
-      <div id="rhad-info" class="opacity-0 max-h-0 overflow-hidden transition-all duration-700 ease-out relative">
-        <div class="mt-12 flex flex-col items-center">
-          <img
-            src="RHAD.png"
-            id="rhad-landing-img"
-            alt="Rhad"
-            class="mb-4 opacity-0"
-            style="width: 140px; height: 140px; object-fit: contain; aspect-ratio: 1 / 1;"
-          />
-          <h4 class="mt-20 text-2xl font-bold text-repores-red mb-2">MEET RHAD</h4>
-          <p class="max-w-xl mx-auto text-base text-repores-white opacity-90">
-            RHADAMANTHUS is The Repores’ own hound from hell. Now a lord of Elysium, Rhad haunts the border of life and death - as judge of the damned.
- 
-          </p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Join The Rhad Pack Section -->
-  <section class="py-16 bg-repores-red">
-    <div class="max-w-4xl mx-auto">
-      <iframe
-        src="https://bandsintown.com/artist/15563423/email_signup_form?headerTextColor=rgba(250,250,250,1)&backgroundColor=rgba(235,29,76,1)&ctaBackgroundColor=rgba(104,14,210,1)&title=JOIN THE RHAD PACK!&headerTextStyle=normal&headerText=Sign Up for Our Mailing List&font=Helvetica&ctaIcon=show&ctaBorderRadius=4px&ctaBorderWidth=0px&ctaBorderColor=rgba(0,180,179,1)&ctaFontColor=rgba(255,255,255,1)&alignment=center&emailInputField=show&ctaLabel=Sign-Up&layout=wide&locale=en"
-        width="100%"
-        height="300px"
-        title="newsletter-widget"
-      ></iframe>
-    </div>
-  </section>
-
-  <!-- Footer -->
-  <footer class="bg-repores-black text-repores-white py-8">
-    <div class="container mx-auto px-4">
-      <div class="flex flex-col md:flex-row justify-between items-center mb-6">
-        <div>
-          <h3 class="text-xl font-bold text-repores-red">THE REPORES</h3>
-          <p class="text-sm opacity-80">Melbourne, Australia</p>
-        </div>
-        <a href="contact" class="text-repores-white font-bold hover:text-repores-red transition-colors duration-300 text-center w-full md:w-auto">Contact Us</a>
-        <div class="flex gap-6">
-          <a href="https://www.instagram.com/the_repores/" target="_blank" rel="noopener noreferrer" class="text-repores-white hover:text-repores-red transition-colors duration-300 text-2xl" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-          <a href="https://www.youtube.com/@therepores" target="_blank" rel="noopener noreferrer" class="text-repores-white hover:text-repores-red transition-colors duration-300 text-2xl" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
-          <a href="https://open.spotify.com/artist/76Jdy3Dfmdnjmh9YA0czZq" target="_blank" rel="noopener noreferrer" class="text-repores-white hover:text-repores-red transition-colors duration-300 text-2xl" aria-label="Spotify"><i class="fab fa-spotify"></i></a>
-          <a href="https://music.apple.com/gb/artist/the-repores/1693825915" target="_blank" rel="noopener noreferrer" class="text-repores-white hover:text-repores-red transition-colors duration-300 text-2xl" aria-label="Apple Music"><i class="fab fa-apple"></i></a>
-        </div>
-      </div>
-      <div class="border-t border-gray-700 pt-8 text-center">
-        <p>&copy; 2026 The Repores. All rights reserved. Website by Cal Lawrence</p>
-      </div>
-    </div>
-  </footer>
-
-  <!-- Rhad Script -->
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const calContainer = document.getElementById('cal-container');
-      const rhadImg = document.getElementById('rhad-img');
-      const rhadInfo = document.getElementById('rhad-info');
-      const rhadLandingImg = document.getElementById('rhad-landing-img');
-      const html = document.documentElement;
-
-      let isPeeking = false;
-      let hideTimeout = null;
-      let isActivated = false;
-
-      function showPeek() {
-        if (isPeeking || isActivated) return;
-        isPeeking = true;
-        rhadImg.classList.add('peek');
-        rhadImg.style.pointerEvents = 'auto';
-        hideTimeout = setTimeout(hidePeek, 3000);
-      }
-
-      function hidePeek() {
-        if (isActivated) return;
-        isPeeking = false;
-        rhadImg.classList.remove('peek');
-        rhadImg.style.pointerEvents = 'none';
-      }
-
-      calContainer.addEventListener('mouseenter', showPeek);
-      calContainer.addEventListener('mouseleave', () => {
-        if (isPeeking && !isActivated) {
-          clearTimeout(hideTimeout);
-          hideTimeout = setTimeout(hidePeek, 500);
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AFL Player Predictions - Torp Data</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f8f9fa;
+            color: #333;
         }
-      });
+        h1 {
+            text-align: center;
+            color: #d32f2f;
+            margin-bottom: 30px;
+        }
+        .team-section {
+            margin-bottom: 40px;
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .team-header {
+            font-size: 1.4em;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #1976d2;
+            border-bottom: 3px solid #1976d2;
+            padding-bottom: 10px;
+        }
+        .players-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 15px;
+        }
+        .player-card {
+            background: #f1f3f4;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #ff9800;
+        }
+        .player-name {
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-bottom: 8px;
+            color: #1a237e;
+        }
+        .stats {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            font-size: 0.9em;
+        }
+        .stat {
+            background: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-weight: 500;
+        }
+        .prediction-highlight {
+            background: linear-gradient(135deg, #4caf50, #8bc34a);
+            color: white;
+            font-weight: bold;
+        }
+        @media (max-width: 768px) {
+            .players-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>AFL Player Predictions - Torp Data Visualisation</h1>
+    <p style="text-align: center; color: #666; margin-bottom: 40px;">
+        Next Round Predictions based on Torp player ratings and historical performance data
+    </p>
 
-      rhadImg.addEventListener('click', () => {
-        if (isActivated) return;
-        isActivated = true;
-        clearTimeout(hideTimeout);
+    <!-- Adelaide Crows -->
+    <div class="team-section">
+        <div class="team-header">🏆 Adelaide Crows</div>
+        <div class="players-grid">
+            <div class="player-card">
+                <div class="player-name">Izzy Rankine</div>
+                <div class="stats">
+                    <span class="stat prediction-highlight">Pred: 95 Torp</span>
+                    <span class="stat">Avg: 87.2</span>
+                    <span class="stat">Disp: 22</span>
+                    <span class="stat">Goals: 2.1</span>
+                </div>
+            </div>
+            <div class="player-card">
+                <div class="player-name">Rory Laird</div>
+                <div class="stats">
+                    <span class="stat prediction-highlight">Pred: 112 Torp</span>
+                    <span class="stat">Avg: 105.8</span>
+                    <span class="stat">Disp: 28</span>
+                    <span class="stat">Tackles: 6.2</span>
+                </div>
+            </div>
+        </div>
+    </div>
 
-        rhadImg.classList.remove('peek');
-        rhadImg.classList.add('jump');
-        rhadImg.style.pointerEvents = 'none';
+    <!-- Brisbane Lions -->
+    <div class="team-section">
+        <div class="team-header">🦁 Brisbane Lions</div>
+        <div class="players-grid">
+            <div class="player-card">
+                <div class="player-name">Lachie Neale</div>
+                <div class="stats">
+                    <span class="stat prediction-highlight">Pred: 118 Torp</span>
+                    <span class="stat">Avg: 115.3</span>
+                    <span class="stat">Disp: 32</span>
+                    <span class="stat">Contests: 14</span>
+                </div>
+            </div>
+            <div class="player-card">
+                <div class="player-name">Will Ashcroft</div>
+                <div class="stats">
+                    <span class="stat prediction-highlight">Pred: 98 Torp</span>
+                    <span class="stat">Avg: 94.1</span>
+                    <span class="stat">Disp: 26</span>
+                    <span class="stat">Clears: 5</span>
+                </div>
+            </div>
+        </div>
+    </div>
 
-        // After jump finishes, show landing + text
-        setTimeout(() => {
-          rhadInfo.classList.remove('opacity-0', 'max-h-0');
-          rhadInfo.classList.add('opacity-100');
-          rhadInfo.style.maxHeight = '500px';
-
-          rhadLandingImg.style.opacity = '1';
-          rhadLandingImg.classList.add('rhad-landing');
-
-          html.classList.add('page-shake');
-          setTimeout(() => html.classList.remove('page-shake'), 500);
-
-          rhadInfo.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }, 900); // matches rhad-jump-leap duration
-      });
-    });
-  </script>
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"></script>
+    <!-- Placeholder for data integration -->
+    <script>
+        // This section will load real Torp data via API
+        // Replace with your actual data source
+        console.log('Ready for Torp API integration');
+        
+        // Example of how to dynamically update:
+        function updatePredictions(data) {
+            // Parse Torp API response and update grid
+            document.querySelectorAll('.prediction-highlight').forEach((el, i) => {
+                el.textContent = `Pred: ${data.players[i]?.torp || 0} Torp`;
+            });
+        }
+        
+        // Future: fetch('your-torp-api-endpoint')
+        //   .then(res => res.json())
+        //   .then(updatePredictions);
+    </script>
 </body>
 </html>
